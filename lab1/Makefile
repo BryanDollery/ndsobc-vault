@@ -1,7 +1,7 @@
 
-cycle: clear vault
+cycle: down up
 
-vault:
+up:
 	@docker run --name vault \
   	-it -d \
     -p 8200:8200 \
@@ -15,10 +15,10 @@ vault:
     vault
 	@echo "Don't forget to source the env"
 
-clear:
+down:
 	@docker rm -f $$(docker ps -qa)
 
-create:
+prep:
 	@./login-as-root.sh
 	@./create-policies.sh
 	@./enable-userpass.sh
