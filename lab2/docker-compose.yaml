@@ -1,0 +1,24 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  vault:
+    image: vault
+    restart: always
+    ports: 
+      - 8200:8200
+    environment: 
+      VAULT_DEV_ROOT_TOKEN_ID: wibble 
+      VAULT_ADDR: http://localhost:8200 
+      VAULT_TOKEN: wibble 
+      VAULT_FORMAT: json 
+    cap_add:
+      - IPC_LOCK
