@@ -2,7 +2,8 @@
 cycle: down up
 
 up:
-	@docker run --name vault \
+	@docker run \
+	  --name vault \
   	-it -d \
     -p 8200:8200 \
     --cap-add=IPC_LOCK \
@@ -16,6 +17,9 @@ up:
 	@echo "Don't forget to source the env"
 
 down:
+	docker rm -f vault
+
+clear:
 	@docker rm -f $$(docker ps -qa)
 
 prep:
@@ -27,7 +31,7 @@ prep:
 	@./create-db-consumer.sh
 	@./create-db-creds.sh
 	@./get-db-creds.sh
-	@./create-policies.sh
+
 
 consume:
 	@./login-as-db-consumer.sh
