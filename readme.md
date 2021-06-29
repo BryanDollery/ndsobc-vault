@@ -5,3 +5,5 @@ Hashicorp vault stands alone at the pinacle of secrets management tools with no 
 
 
 This repo contains a Makefile that will help configure a basic demo of secret ownership and consumption. Start by sourcing the env script (`. ./env.sh`), then run `make vault` to start vault, followed by `make create` to create all the assets for the workshop. You can then use the login-as scripts to change who you're logged in as and try to get the secret.
+
+You can follow your changes through the vault ui, at `http://localhost:8200`
