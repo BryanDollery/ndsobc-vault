@@ -1,5 +1,4 @@
-# Use root/example as user/password credentials
-version: '3.1'
+version: '3.3'
 
 services:
 
@@ -8,7 +7,7 @@ services:
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_ROOT_PASSWORD: root
 
   vault:
     image: vault
@@ -22,3 +21,9 @@ services:
       VAULT_FORMAT: json 
     cap_add:
       - IPC_LOCK
+
+  # debug:
+  #   image: debug
+  #   restart: always
+  #   environment:
+  #     VAULT_ADDR: http://vault:8200 

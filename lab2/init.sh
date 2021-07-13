@@ -4,17 +4,21 @@ echo "Initialising dynamic creds"
 VAULT_ADDR=http://localhost:8200
 vault login token=wibble
 
+echo "enable db..."
 vault secrets enable database
-
-vault write database/config/mongo \
+echo "db enabled"
+echo "writing config/customers"
+vault write database/config/customers \
     plugin_name=mongodb-database-plugin \
-    allowed_roles="user-viewer" \
-    connection_url="mongodb://mongo/admin" \
+    allowed_roles="customer-agent" \
+    connection_url="mongodb://{{username}}:{{password}}@mongo/?tls=false" \
     username="root" \
-    password="example"
-
-vault write database/roles/user-viewer \
-    db_name=mongo \
-    creation_statements='{ "db": "admin", "roles": [{ "role": "readWrite" }, {"role": "read", "db": "foo"}] }' \
-    default_ttl="1h" \
-    max_ttl="24h"
+    password="root"
+echo "config/customers written"
+echo "writing roles"
+vault write database/roles/customer-agent \
+    db_name=customers \
+    creation_statements='{ "db": "customers", "roles": [{ "role": "readWrite" }, {"role": "read", "db": "customers"}] }' \
+    default_ttl="60s" \
+    max_ttl="60s"
+echo "roles written"
